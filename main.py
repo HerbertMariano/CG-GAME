@@ -1,38 +1,24 @@
-import pygame
+import pygame as pg
+import numpy as np
 from pygame.locals import *
  
-class App:
-    def __init__(self):
-        self._running = True
-        self._display_surf = None
-        self.size = self.weight, self.height = 640, 400
- 
-    def on_init(self):
-        pygame.init()
-        self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
-        self._running = True
- 
-    def on_event(self, event):
-        if event.type == pygame.QUIT:
-            self._running = False
-    def on_loop(self):
-        pass
-    def on_render(self):
-        pass
-    def on_cleanup(self):
-        pygame.quit()
- 
-    def on_execute(self):
-        if self.on_init() == False:
-            self._running = False
- 
-        while( self._running ):
-            for event in pygame.event.get():
-                self.on_event(event)
-            self.on_loop()
-            self.on_render()
-        self.on_cleanup()
- 
+def main():
+    pg.init()
+    screen = pg.display.set_mode((800,600))
+    running = True
+    
+    while running:
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                runnin = False
+
+        frame = np.random.uniform(0,1,(80,60,3))
+
+        surf = pg.surfarray.make_surface(frame*255)
+        surf = pg.transform.scale(surf,(800,600))
+        screen.blit(surf,(0,0))
+        pg.display.update()
+
 if __name__ == "__main__" :
-    theApp = App()
-    theApp.on_execute()
+    main()
+    pg.quit()
